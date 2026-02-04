@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Rebe 💖</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        font-family: 'Comic Sans MS', cursive;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    /* FONDO */
+    .background {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+    }
+
+    .bg-heart {
+        position: absolute;
+        opacity: 0.25;
+        animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+        from { transform: translateY(100vh); }
+        to { transform: translateY(-10vh); }
+    }
+
+    .sparkle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.6;
+        animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+        from { opacity: 0.2; }
+        to { opacity: 0.9; }
+    }
+
+    /* CONTENIDO */
+    .container {
+        position: relative;
+        z-index: 2;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .bear {
+        font-size: 120px;
+        cursor: pointer;
+        animation: float 2s infinite ease-in-out;
+    }
+
+    .touch-text {
+        font-size: 24px;
+        color: white;
+        animation: blink 1.5s infinite;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0); }
+    }
+
+    @keyframes blink {
+        0%,100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    /* FRASES */
+    .message {
+        position: absolute;
+        font-size: 30px;
+        color: white;
+        animation: fadeIn 1.5s forwards;
+        z-index: 2;
+        text-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* CARTA */
+    .letter {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 3;
+        animation: fadeIn 2s forwards;
+    }
+
+    .envelope {
+        font-size: 120px;
+        cursor: pointer;
+        animation: float 2s infinite;
+    }
+
+    .letter-text {
+        font-size: 24px;
+        color: white;
+        margin-top: 10px;
+        animation: blink 1.5s infinite;
+    }
+
+    /* FINAL */
+    .final {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 3;
+        animation: fadeIn 2s forwards;
+    }
+
+    .big-heart {
+        position: absolute;
+        font-size: 260px;
+        opacity: 0.18;
+        animation: heartbeat 1.5s infinite;
+    }
+
+    .final-text {
+        position: relative;
+        font-size: 34px;
+        color: white;
+        font-weight: bold;
+        line-height: 1.4;
+        padding: 20px;
+        max-width: 90%;
+        text-shadow: 0 0 20px rgba(255,255,255,0.9);
+        animation: glow 2s infinite alternate;
+    }
+
+    @keyframes heartbeat {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes glow {
+        from { text-shadow: 0 0 10px #fff; }
+        to { text-shadow: 0 0 30px #ff4d6d; }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="background" id="background"></div>
+
+<div class="container" id="container">
+    <div class="bear" id="bear">🧸</div>
+    <div class="touch-text">Tócame 💕</div>
+</div>
+
+<script>
+/* FONDO */
+const bg = document.getElementById("background");
+
+for (let i = 0; i < 25; i++) {
+    const heart = document.createElement("div");
+    heart.className = "bg-heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 20 + 14) + "px";
+    heart.style.animationDuration = (Math.random() * 10 + 10) + "s";
+    bg.appendChild(heart);
+}
+
+for (let i = 0; i < 40; i++) {
+    const sp = document.createElement("div");
+    sp.className = "sparkle";
+    sp.style.left = Math.random() * 100 + "vw";
+    sp.style.top = Math.random() * 100 + "vh";
+    sp.style.animationDuration = (Math.random() * 2 + 1) + "s";
+    bg.appendChild(sp);
+}
+
+/* FRASES */
+const frases = [
+    "Te quiero mucho mi niña hermosa💖",
+    "Eres mi solecito que ilumina todos mis dias🌸",
+    "Tu voz es una dulce melodia que calma mi corazon 💕",
+    "Amo tu sonria ✨"
+];
+
+document.getElementById("bear").addEventListener("click", () => {
+    document.getElementById("container").remove();
+    mostrarFrases(0);
+});
+
+function mostrarFrases(i) {
+    if (i >= frases.length) {
+        mostrarCarta();
+        return;
+    }
+
+    const msg = document.createElement("div");
+    msg.className = "message";
+    msg.innerText = frases[i];
+    msg.style.top = "45%";
+    msg.style.left = "50%";
+    msg.style.transform = "translate(-50%, -50%)";
+    document.body.appendChild(msg);
+
+    setTimeout(() => {
+        msg.remove();
+        mostrarFrases(i + 1);
+    }, 2300);
+}
+
+/* CARTA */
+function mostrarCarta() {
+    const letter = document.createElement("div");
+    letter.className = "letter";
+    letter.innerHTML = `
+        <div class="envelope">💌</div>
+        <div class="letter-text">Toca la carta 💕</div>
+    `;
+    document.body.appendChild(letter);
+
+    letter.querySelector(".envelope").addEventListener("click", () => {
+        letter.remove();
+        mostrarFinal();
+    });
+}
+
+/* FINAL */
+function mostrarFinal() {
+    document.body.innerHTML += `
+        <div class="final">
+            <div class="big-heart">❤️</div>
+            <div class="final-text">
+                Gracias por haber llegado a mi vida,<br>
+                Rebe 💕
+            </div>
+        </div>
+    `;
+}
+</script>
+
+</body>
+</html>
